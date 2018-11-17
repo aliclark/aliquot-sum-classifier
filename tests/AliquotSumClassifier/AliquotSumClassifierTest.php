@@ -7,30 +7,33 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class AliquotSumClassifierTest extends TestCase
 {
-    private const ENDPOINT = '/aliquot-sum-classification';
+    protected $classifier;
 
-    private const LOCAL_DURATION_MAX_SECS = 0.5;
+    public function __construct(AliquotSumClassifier $classifier)
+    {
+        $this->classifier = $classifier;
+    }
 
     public function testInputValidation()
     {
-        ExpectException(AliquotSumClassifier::getClassification(null), TypeError::class);
-        ExpectException(AliquotSumClassifier::getClassification(true), TypeError::class);
-        ExpectException(AliquotSumClassifier::getClassification(3.0), TypeError::class);
-        ExpectException(AliquotSumClassifier::getClassification('3'), TypeError::class);
+        ExpectException($classifier->getClassification(null), TypeError::class);
+        ExpectException($classifier->getClassification(true), TypeError::class);
+        ExpectException($classifier->getClassification(3.0), TypeError::class);
+        ExpectException($classifier->getClassification('3'), TypeError::class);
 
-        ExpectException(AliquotSumClassifier::getClassification(-3), InvalidArgumentException::class);
-        ExpectException(AliquotSumClassifier::getClassification(-1), InvalidArgumentException::class);
-        ExpectException(AliquotSumClassifier::getClassification(0), InvalidArgumentException::class);
+        ExpectException($classifier->getClassification(-3), InvalidArgumentException::class);
+        ExpectException($classifier->getClassification(-1), InvalidArgumentException::class);
+        ExpectException($classifier->getClassification(0), InvalidArgumentException::class);
     }
 
     public function testClassification()
     {
         // test some values manually for sanity
-        ExpectValue(AliquotSumClassifier::getClassification(1), AliquotSumClassifier::DEFICIENT);
-        ExpectValue(AliquotSumClassifier::getClassification(4), AliquotSumClassifier::DEFICIENT);
-        ExpectValue(AliquotSumClassifier::getClassification(6), AliquotSumClassifier::PERFECT);
-        ExpectValue(AliquotSumClassifier::getClassification(8), AliquotSumClassifier::DEFICIENT);
-        ExpectValue(AliquotSumClassifier::getClassification(12), AliquotSumClassifier::ABUNDANT);
+        ExpectValue($classifier->getClassification(1), AliquotSumClassifier::DEFICIENT);
+        ExpectValue($classifier->getClassification(4), AliquotSumClassifier::DEFICIENT);
+        ExpectValue($classifier->getClassification(6), AliquotSumClassifier::PERFECT);
+        ExpectValue($classifier->getClassification(8), AliquotSumClassifier::DEFICIENT);
+        ExpectValue($classifier->getClassification(12), AliquotSumClassifier::ABUNDANT);
 
         // test a larger range automatically for sanity
         // from https://en.wikipedia.org/wiki/Aliquot_sum#Examples
@@ -40,7 +43,7 @@ class AliquotSumClassifierTest extends TestCase
 
         foreach ($expected_sums as $index => $expected_sum) {
             $n = $index + 1;
-            $classification = AliquotSumClassifier::getClassification($n);
+            $classification = $classifier->getClassification($n);
 
             if ($expected_sum < $n) {
                 ExpectValue($classification, AliquotSumClassifier::DEFICIENT);
@@ -52,45 +55,5 @@ class AliquotSumClassifierTest extends TestCase
                 ExpectValue($classification, AliquotSumClassifier::PERFECT);
             }
         }
-    }
-
-    // FIXME: this test is more of a prompt to consider what the maximum
-    // allowed input should be based on consumer needs and denial of service
-    // security requirements
-    public function testPerformance()
-    {
-        $time_start = microtime_float();
-
-        AliquotSumClassifier::getClassification(PHP_INT_MAX);
-
-        $time_end = microtime_float();
-        $duration = $time_end - $time_start;
-
-        ExpectedLessThan($duration, self::LOCAL_DURATION_MAX_SECS);
-    }
-
-    public function testJsonApi()
-    {
-        $response = $this->get(self::ENDPOINT);
-        $response->assertStatus(400);
-
-        $this->expectArgStatus('', 400);
-        $this->expectArgStatus('null', 400);
-        $this->expectArgStatus('0', 400);
-        $this->expectArgStatus('2,2', 400);
-        $this->expectArgStatus('-1', 400);
-
-        $this->expectArgStatus('1', 200);
-        $this->expectArgStatus('2', 200);
-        $this->expectArgStatus('6', 200);
-        $this->expectArgStatus('8', 200);
-        $this->expectArgStatus('12', 200);
-    }
-
-    private function expectArgStatus($argstr, $status)
-    {
-        $response = $this->get(self::ENDPOINT.'?n='.$argstr);
-        $response->assertStatus($status);
-
     }
 }

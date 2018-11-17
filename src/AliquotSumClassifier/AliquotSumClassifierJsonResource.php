@@ -17,10 +17,17 @@ class AliquotSumClassifierJsonResource extends Resource
         AliquotSumClassifier::ABUNDANT => 'abundant'
     ];
 
+    private $classifier;
+
+    public function __construct(AliquotSumClassifier $classifier)
+    {
+        $this->classifier = $classifier;
+    }
+
     public function toArray($request)
     {
         return [
-            'classification' => self::CLASSIFIER_STRINGS[AliquotSumClassifier::getClassification($request)]
+            'classification' => self::CLASSIFIER_STRINGS[$this->classifier->getClassification($request)]
         ];
     }
 }
