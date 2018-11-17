@@ -19,11 +19,11 @@ class AliquotSumClassifierImplTest extends AliquotSumClassifierTest
     // security requirements
     public function testPerformance()
     {
-        $time_start = microtime_float();
+        $time_start = microtime(true);
 
         $this->classifier->getClassification(PHP_INT_MAX);
 
-        $time_end = microtime_float();
+        $time_end = microtime(true);
         $duration = $time_end - $time_start;
 
         ExpectedLessThan($duration, self::LOCAL_DURATION_MAX_SECS);
