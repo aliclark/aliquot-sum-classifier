@@ -9,7 +9,7 @@ class AliquotSumClassifierImpl implements AliquotSumClassifier
     public function getClassification(int $n): string
     {
         if ($n <= 0) {
-            throw InvalidArgumentException('Input must be a positive integer.');
+            throw new InvalidArgumentException('Input must be a positive integer.');
         }
 
         $n_aliquot_sum = self::aliquotSum($n);
