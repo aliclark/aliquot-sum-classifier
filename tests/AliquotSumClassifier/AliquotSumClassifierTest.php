@@ -16,11 +16,6 @@ class AliquotSumClassifierTest extends TestCase
 
     public function testInputValidation()
     {
-        ExpectException($this->classifier->getClassification(null), TypeError::class);
-        ExpectException($this->classifier->getClassification(true), TypeError::class);
-        ExpectException($this->classifier->getClassification(3.0), TypeError::class);
-        ExpectException($this->classifier->getClassification('3'), TypeError::class);
-
         ExpectException($this->classifier->getClassification(-3), InvalidArgumentException::class);
         ExpectException($this->classifier->getClassification(-1), InvalidArgumentException::class);
         ExpectException($this->classifier->getClassification(0), InvalidArgumentException::class);
