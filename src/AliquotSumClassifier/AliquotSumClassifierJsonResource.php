@@ -10,7 +10,8 @@ use Illuminate\Http\Resources\Json\Resource;
 // message.
 class AliquotSumClassifierJsonResource extends Resource
 {
-    // contract with API consumers
+    // Ensures the external contract with API consumers is upheld independently
+    // of internal code changes
     private const CLASSIFIER_STRINGS = [
         AliquotSumClassifier::DEFICIENT => 'deficient',
         AliquotSumClassifier::PERFECT => 'perfect',

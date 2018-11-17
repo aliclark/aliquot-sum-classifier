@@ -4,6 +4,7 @@ namespace AliquotSumClassifier;
 
 interface AliquotSumClassifier
 {
+    // Constants for IDE search goodness
     const DEFICIENT = 'deficient';
     const PERFECT   = 'perfect';
     const ABUNDANT  = 'abundant';
