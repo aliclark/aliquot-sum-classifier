@@ -21,7 +21,7 @@ class AliquotSumClassifierImplTest extends AliquotSumClassifierTest
     {
         $time_start = microtime_float();
 
-        $classifier->getClassification(PHP_INT_MAX);
+        $this->classifier->getClassification(PHP_INT_MAX);
 
         $time_end = microtime_float();
         $duration = $time_end - $time_start;

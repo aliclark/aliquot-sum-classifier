@@ -16,24 +16,24 @@ class AliquotSumClassifierTest extends TestCase
 
     public function testInputValidation()
     {
-        ExpectException($classifier->getClassification(null), TypeError::class);
-        ExpectException($classifier->getClassification(true), TypeError::class);
-        ExpectException($classifier->getClassification(3.0), TypeError::class);
-        ExpectException($classifier->getClassification('3'), TypeError::class);
+        ExpectException($this->classifier->getClassification(null), TypeError::class);
+        ExpectException($this->classifier->getClassification(true), TypeError::class);
+        ExpectException($this->classifier->getClassification(3.0), TypeError::class);
+        ExpectException($this->classifier->getClassification('3'), TypeError::class);
 
-        ExpectException($classifier->getClassification(-3), InvalidArgumentException::class);
-        ExpectException($classifier->getClassification(-1), InvalidArgumentException::class);
-        ExpectException($classifier->getClassification(0), InvalidArgumentException::class);
+        ExpectException($this->classifier->getClassification(-3), InvalidArgumentException::class);
+        ExpectException($this->classifier->getClassification(-1), InvalidArgumentException::class);
+        ExpectException($this->classifier->getClassification(0), InvalidArgumentException::class);
     }
 
     public function testClassification()
     {
         // test some values manually for sanity
-        ExpectValue($classifier->getClassification(1), AliquotSumClassifier::DEFICIENT);
-        ExpectValue($classifier->getClassification(4), AliquotSumClassifier::DEFICIENT);
-        ExpectValue($classifier->getClassification(6), AliquotSumClassifier::PERFECT);
-        ExpectValue($classifier->getClassification(8), AliquotSumClassifier::DEFICIENT);
-        ExpectValue($classifier->getClassification(12), AliquotSumClassifier::ABUNDANT);
+        ExpectValue($this->classifier->getClassification(1), AliquotSumClassifier::DEFICIENT);
+        ExpectValue($this->classifier->getClassification(4), AliquotSumClassifier::DEFICIENT);
+        ExpectValue($this->classifier->getClassification(6), AliquotSumClassifier::PERFECT);
+        ExpectValue($this->classifier->getClassification(8), AliquotSumClassifier::DEFICIENT);
+        ExpectValue($this->classifier->getClassification(12), AliquotSumClassifier::ABUNDANT);
 
         // test a larger range automatically for sanity
         // from https://en.wikipedia.org/wiki/Aliquot_sum#Examples
@@ -43,7 +43,7 @@ class AliquotSumClassifierTest extends TestCase
 
         foreach ($expected_sums as $index => $expected_sum) {
             $n = $index + 1;
-            $classification = $classifier->getClassification($n);
+            $classification = $this->classifier->getClassification($n);
 
             if ($expected_sum < $n) {
                 ExpectValue($classification, AliquotSumClassifier::DEFICIENT);
