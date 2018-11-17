@@ -11,8 +11,14 @@ namespace AliquotSumClassifier;
 // method to an existing class depending on which is applicable, then refactor
 // the code out with interfaces and DI once it makes sense to do that.
 //
-// In real life for a simple example like this, static methods would have been
-// more expedient and appropriate until proven otherwise.
+// In real life for a simple example like this, static methods with no
+// interface would be more expedient and appropriate until proven otherwise:
+//
+// class AliquotSumClassifier {
+//     /** documentation */
+//     public  static function getClassification(int $n): string { ... }
+//     private static function aliquotSum($n) { ... }
+// }
 
 class AliquotSumClassifierComputation implements AliquotSumClassifier
 {
