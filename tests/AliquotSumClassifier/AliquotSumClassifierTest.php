@@ -9,6 +9,8 @@ class AliquotSumClassifierTest extends TestCase
 {
     private const ENDPOINT = '/aliquot-sum-classification';
 
+    private const LOCAL_DURATION_MAX_SECS = 0.5;
+
     public function testInputValidation()
     {
         ExpectException(AliquotSumClassifier::getClassification(null), TypeError::class);
@@ -50,6 +52,21 @@ class AliquotSumClassifierTest extends TestCase
                 ExpectValue($classification, AliquotSumClassifier::PERFECT);
             }
         }
+    }
+
+    // FIXME: this test is more of a prompt to consider what the maximum
+    // allowed input should be based on consumer needs and denial of service
+    // security requirements
+    public function testPerformance()
+    {
+        $time_start = microtime_float();
+
+        AliquotSumClassifier::getClassification(PHP_INT_MAX);
+
+        $time_end = microtime_float();
+        $duration = $time_end - $time_start;
+
+        ExpectedLessThan($duration, self::LOCAL_DURATION_MAX_SECS);
     }
 
     public function testJsonApi()
