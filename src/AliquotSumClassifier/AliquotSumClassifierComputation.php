@@ -2,6 +2,18 @@
 
 namespace AliquotSumClassifier;
 
+// Engineering an application using interfaces and dependency injection this
+// way takes some upfront effort, but leads to very testable and cleanly
+// abstracted reusable components.. it scales and ages surprisingly well.
+//
+// But if unsure about the engineering needed for new code, a good rule of
+// thumb is to start writing code as either static class methods or private
+// method to an existing class depending on which is applicable, then refactor
+// the code out with interfaces and DI once it makes sense to do that.
+//
+// In real life for a simple example like this, static methods would have been
+// more expedient and appropriate until proven otherwise.
+
 class AliquotSumClassifierComputation implements AliquotSumClassifier
 {
     public function getClassification(int $n): string
