@@ -36,8 +36,7 @@ class AliquotSumClassifierImpl implements AliquotSumClassifier
         $n_aliquot_sum = 1;
         for ($x = 2; $x < $sqrt_float; ++$x) {
             if (($n % $x) === 0) {
-                $z = $n / $x; 
-                $n_aliquot_sum += $x + $z;
+                $n_aliquot_sum += $x + ($n / $x);
             }
         }
 

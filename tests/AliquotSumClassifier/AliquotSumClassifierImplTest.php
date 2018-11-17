@@ -21,6 +21,7 @@ class AliquotSumClassifierImplTest extends AliquotSumClassifierTest
     {
         $time_start = microtime(true);
 
+        // XXX: about pow(2, 46) is where this becomes slow
         $this->classifier->getClassification(PHP_INT_MAX);
 
         $time_end = microtime(true);
