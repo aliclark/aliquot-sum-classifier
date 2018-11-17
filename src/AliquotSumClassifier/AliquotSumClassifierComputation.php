@@ -2,9 +2,7 @@
 
 namespace AliquotSumClassifier;
 
-// Purposefully smelly name to encourage use of the interface and dependency
-// injection instead of using this class directly
-class AliquotSumClassifierImpl implements AliquotSumClassifier
+class AliquotSumClassifierComputation implements AliquotSumClassifier
 {
     public function getClassification(int $n): string
     {

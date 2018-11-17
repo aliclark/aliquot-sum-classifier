@@ -5,13 +5,13 @@ namespace Tests\AliquotSumClassifier;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
-class AliquotSumClassifierImplTest extends AliquotSumClassifierTest
+class AliquotSumClassifierComputationTest extends AliquotSumClassifierTest
 {
     private const LOCAL_DURATION_MAX_SECS = 0.5;
 
     public function __construct()
     {
-        AliquotSumClassifierTest::__construct(new AliquotSumClassifierImpl());
+        AliquotSumClassifierTest::__construct(new AliquotSumClassifierComputation());
     }
 
     // FIXME: this test is more of a prompt to consider what the maximum
