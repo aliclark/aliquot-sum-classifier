@@ -15,6 +15,9 @@ interface AliquotSumClassifier
      *
      * Please see https://en.wikipedia.org/wiki/Aliquot_sum for further info.
      *
+     * XXX: The standard implementation for calculation is O(sqrt(N)) in time,
+     * so for larger inputs this may be CPU blocking.
+     *
      * @param int $n A number to classify greater than zero.
      * @return string One of AliquotSumClassifier::{DEFICIENT,PERFECT,ABUNDANT}
      * @throws InvalidArgumentException if the argument is not a positive non-zero integer.
