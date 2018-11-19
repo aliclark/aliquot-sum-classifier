@@ -2,8 +2,6 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-
 use App\AliquotSumClassifierComputation;
 
 class AliquotSumClassifierComputationTest extends AliquotSumClassifierBaseTestCase
