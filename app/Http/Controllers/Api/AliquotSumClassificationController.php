@@ -13,7 +13,7 @@ class AliquotSumClassificationController extends Controller
 {
     // Ensures the external contract with API consumers is upheld independently
     // of internal code changes
-    private const CLASSIFIER_STRINGS = [
+    private const CLASSIFICATION_STRINGS = [
         AliquotSumClassifier::DEFICIENT => 'deficient',
         AliquotSumClassifier::PERFECT => 'perfect',
         AliquotSumClassifier::ABUNDANT => 'abundant'
@@ -43,7 +43,7 @@ class AliquotSumClassificationController extends Controller
         // exceed the limit.
 
         return response()->json([
-            'data' => ['classification' => self::CLASSIFIER_STRINGS[$this->classifier->getClassification($n)]]
+            'data' => ['classification' => self::CLASSIFICATION_STRINGS[$this->classifier->getClassification($n)]]
         ]);
     }
 }
