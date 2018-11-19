@@ -1,3 +1,3 @@
 <?php
 
-Route::resource('aliquot-sum-classification', 'AliquotSumClassifierJsonController');
+Route::get('aliquot-sum-classifications/{n}', 'Api\AliquotSumClassificationController@show')->where('n', '[1-9][0-9]*');

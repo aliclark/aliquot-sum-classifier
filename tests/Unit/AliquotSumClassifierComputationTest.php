@@ -1,17 +1,18 @@
 <?php
 
-namespace Tests\AliquotSumClassifier;
+namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
-class AliquotSumClassifierComputationTest extends AliquotSumClassifierTest
+use App\AliquotSumClassifierComputation;
+
+class AliquotSumClassifierComputationTest extends AliquotSumClassifierBaseTestCase
 {
     private const LOCAL_DURATION_MAX_SECS = 0.5;
 
-    public function __construct()
+    public function setUp()
     {
-        AliquotSumClassifierTest::__construct(new AliquotSumClassifierComputation());
+        parent::setClassifier(new AliquotSumClassifierComputation());
     }
 
     // FIXME: this test is more of a prompt to consider what the maximum
@@ -22,11 +23,12 @@ class AliquotSumClassifierComputationTest extends AliquotSumClassifierTest
         $time_start = microtime(true);
 
         // XXX: about pow(2, 46) is where this becomes slow
+        //$this->classifier->getClassification(pow(2, 46));
         $this->classifier->getClassification(PHP_INT_MAX);
 
         $time_end = microtime(true);
         $duration = $time_end - $time_start;
 
-        ExpectedLessThan($duration, self::LOCAL_DURATION_MAX_SECS);
+        $this->assertLessThan($duration, self::LOCAL_DURATION_MAX_SECS);
     }
 }

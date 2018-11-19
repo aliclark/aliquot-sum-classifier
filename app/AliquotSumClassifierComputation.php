@@ -1,6 +1,6 @@
 <?php
 
-namespace AliquotSumClassifier;
+namespace App;
 
 // Engineering an application using interfaces and dependency injection this
 // way takes some upfront effort, but leads to very testable and cleanly
@@ -25,7 +25,7 @@ class AliquotSumClassifierComputation implements AliquotSumClassifier
     public function getClassification(int $n): string
     {
         if ($n <= 0) {
-            throw new InvalidArgumentException('Input must be a positive integer.');
+            throw new \InvalidArgumentException('Input must be a positive integer.');
         }
 
         $n_aliquot_sum = self::aliquotSum($n);

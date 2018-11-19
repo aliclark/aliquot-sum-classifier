@@ -1,6 +1,6 @@
 <?php
 
-namespace AliquotSumClassifier;
+namespace App;
 
 interface AliquotSumClassifier
 {
