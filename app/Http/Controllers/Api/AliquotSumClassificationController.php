@@ -31,12 +31,12 @@ class AliquotSumClassificationController extends Controller
         if (!ctype_digit($param_n)) {
            throw new \InvalidArgumentException('Input must be numeric');
         }
-        $n = (int)$param_n;
-
-        if (strval($n) !== $param_n) {
+        if (strval((int)$param_n) !== $param_n) {
             // This could happen if $param_n is greater than PHP_INT_MAX for example
             throw new \InvalidArgumentException('Input could not be converted to a number.');
         }
+
+        $n = (int)$param_n;
 
         // FIXME: either add security or put a reasonably small limit on the
         // input value that can be queried and status 403 for queries that
